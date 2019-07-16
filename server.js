@@ -5,7 +5,7 @@ const app = require('./lib/app');
 
 const PORT = process.env.PORT || 7890;
 
-app.removeListener(PORT, () => {
+app.listen(PORT, () => {
   //esling-disable-next-line no-console
   console.log(`Started on ${PORT}`);
 });
