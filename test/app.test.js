@@ -26,7 +26,6 @@ describe('app routes', () => {
         toptext: 'ha long bay/hotline bling', 
         image: 'https://cdn.kapwing.com/final_5bf89f4d3a4f090013ac5fcf.jpg' })
       .then(res => {
-        console.log(res.body);
         expect(res.body).toEqual({
           _id: expect.any(String),
           toptext: 'ha long bay/hotline bling', 
@@ -70,11 +69,29 @@ describe('app routes', () => {
         bottomtext: 'ha long bay/hotline bling', 
       })
       .then(res => {
-        console.log(res.body)
         expect(res.body.toptext).toEqual('that can only mean one thing');
         expect(res.body.bottomtext).toEqual('ha long bay/hotline bling');
-
       });
   });
 
+  it('can delete a meme by Id', async() => {
+    const meme = await Meme.create({ 
+      toptext: 'ha long bay/hotline bling', 
+      bottomtext: 'that can only mean one thing',
+      image: 'https://cdn.kapwing.com/final_5bf89f4d3a4f090013ac5fcf.jpg', 
+      __v: 0
+    });
+
+    return request(app)
+      .delete(`/api/v1/memes/${meme._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          toptext: 'ha long bay/hotline bling', 
+          bottomtext: 'that can only mean one thing',
+          image: 'https://cdn.kapwing.com/final_5bf89f4d3a4f090013ac5fcf.jpg', 
+          __v: 0
+        });
+      });
+  });        
 });
