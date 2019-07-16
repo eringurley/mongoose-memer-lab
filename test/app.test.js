@@ -22,21 +22,21 @@ describe('app routes', () => {
   it('creates a new meme', () => {
     return request(app)
       .post('/api/v1/memes')
-      .send({ bottomtext: 'that can only mean one thing', 
-        toptext: 'ha long bay/hotline bling', 
+      .send({ bottom: 'that can only mean one thing', 
+        top: 'ha long bay/hotline bling', 
         image: 'https://cdn.kapwing.com/final_5bf89f4d3a4f090013ac5fcf.jpg' })
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
-          toptext: 'ha long bay/hotline bling', 
-          bottomtext: 'that can only mean one thing',
+          top: 'ha long bay/hotline bling', 
+          bottom: 'that can only mean one thing',
           image: 'https://cdn.kapwing.com/final_5bf89f4d3a4f090013ac5fcf.jpg', 
           __v: 0
         });
       });
   });
   it('gets a list of memes', async() => {
-    const meme = await Meme.create({ bottomtext: 'that can only mean one thing' });
+    const meme = await Meme.create({ bottom: 'that can only mean one thing' });
 
     return request(app)
       .get('/api/v1/memes')
@@ -47,37 +47,37 @@ describe('app routes', () => {
   });
 
   it('get a meme by id', async() => {
-    const meme = await Meme.create({ bottomtext: 'that can only mean one thing' });
+    const meme = await Meme.create({ bottom: 'that can only mean one thing' });
     return request(app)
       .get(`/api/v1/memes/${meme._id}`)
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
-          bottomtext: 'that can only mean one thing',
+          bottom: 'that can only mean one thing',
           __v: 0
         });
       });   
   });
 
   it('can update the meme', async() => {
-    const meme = await Meme.create({ toptext: 'that can only mean one thing', bottomtext: 'that can only mean one thing' });
+    const meme = await Meme.create({ top: 'that can only mean one thing', bottom: 'that can only mean one thing' });
 
     return request(app)
       .patch(`/api/v1/memes/${meme._id}`)
       .send({ 
-        toptext: 'that can only mean one thing',
-        bottomtext: 'ha long bay/hotline bling', 
+        top: 'that can only mean one thing',
+        bottom: 'ha long bay/hotline bling', 
       })
       .then(res => {
-        expect(res.body.toptext).toEqual('that can only mean one thing');
-        expect(res.body.bottomtext).toEqual('ha long bay/hotline bling');
+        expect(res.body.top).toEqual('that can only mean one thing');
+        expect(res.body.bottom).toEqual('ha long bay/hotline bling');
       });
   });
 
   it('can delete a meme by Id', async() => {
     const meme = await Meme.create({ 
-      toptext: 'ha long bay/hotline bling', 
-      bottomtext: 'that can only mean one thing',
+      top: 'ha long bay/hotline bling', 
+      bottom: 'that can only mean one thing',
       image: 'https://cdn.kapwing.com/final_5bf89f4d3a4f090013ac5fcf.jpg', 
       __v: 0
     });
@@ -87,8 +87,8 @@ describe('app routes', () => {
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
-          toptext: 'ha long bay/hotline bling', 
-          bottomtext: 'that can only mean one thing',
+          top: 'ha long bay/hotline bling', 
+          bottom: 'that can only mean one thing',
           image: 'https://cdn.kapwing.com/final_5bf89f4d3a4f090013ac5fcf.jpg', 
           __v: 0
         });
